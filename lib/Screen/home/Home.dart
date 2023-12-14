@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nokia/provider/userProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+  final Uri _url = Uri.parse('https://n1shan1.github.io/nokia-website/');
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -90,11 +92,16 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Image.asset(
-                  'asset/IMG_6821.png',
-                  fit: BoxFit.fill,
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.2,
+                Container(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    onPressed: ()async{
+                        if (!await launchUrl(_url)) {
+                          throw Exception('Could not launch $_url');
+                        }
+                    }, 
+                    child: const Text('Click Here')
+                  ),
                 )
             ],
           )
@@ -152,79 +159,3 @@ class ListtielWidget extends StatelessWidget {
   }
 }
 
-/**
- * CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              leading: const Icon(null),
-              backgroundColor: Colors.transparent,
-              title: Image.asset(
-                'asset/Nokia logo RGB-White_HR.png',
-                height: 50,
-              ),
-              actions: [
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(
-                    Icons.exit_to_app,
-                    color: Colors.white,
-                    size: 45,
-                  ),
-                )
-              ],
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 80
-                ),
-                child: Card(
-                  color: Colors.black87,
-                  child: Column(
-                    children: [
-                      ListtielWidget(
-                        title: 'Home', 
-                        value: Student.teamname,
-                        optional: Icons.bookmark,
-                        optionalcolor: Student.teamname == "TOM & JERRY"
-                        ?Colors.red:Student.teamname == "MOTU PATLU"?Colors.amber:
-                        Student.teamname == "SHIN-CHAN"?Colors.green:
-                        Colors.blue
-                      ),
-                      ListtielWidget(
-                        title: 'Nokia Id', 
-                        value: Student.nokiaid
-                      ),
-                      ListtielWidget(
-                        title: 'First Name', 
-                        value: Student.firstname
-                      ),
-                      ListtielWidget(
-                        title: 'Last Name', 
-                        value: Student.lastname
-                      ),
-                      ListtielWidget(
-                        title: 'Mentor', 
-                        value: Student.lastname
-                      ),
-                      ListtielWidget(
-                        title: 'V.Captain', 
-                        value: Student.vcaptainone
-                      ),
-                      ListtielWidget(
-                        title: 'V.Captain', 
-                        value: Student.vcaptaintwo
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Image.asset('asset/IMG_6821.png'),
-            )
-          ],
-        ),
- */
